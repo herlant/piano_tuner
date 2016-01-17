@@ -26,9 +26,7 @@ span.button { display: inline-block; margin: 0 3px 9px 1px; background-color: #B
 
 span.button:hover, #note-selector-button:hover { background-color: #C97438; }
 
-#play-indicator { display: inline-block; width: 24px; height: 18px; vertical-align: middle; background-image: url('icons.png');
-	background-position: -122px -4px; background-size: auto 24px;
-    transition: opacity 0.2s; }
+#play-indicator { display: inline-block; width: 24px; height: 18px; vertical-align: middle; }
 #play-indicator.playing { opacity: 1 }
 #play-indicator.stopped { opacity: 0 }
 
@@ -74,8 +72,7 @@ span.button:hover, #note-selector-button:hover { background-color: #C97438; }
 #volume-slider .ui-slider-handle.ui-state-focus {
     box-shadow: -1px 1px 2px rgba(255,255,255,0.1), inset -2px -2px 6px rgba(255,255,255,0.3), inset 2px 2px 6px  rgba(255,255,255,0.3);
 }
-label#volume-slider-label { display: inline-block; width: 23px; height: 9px; background-image: url('icons.png'); background-size: auto 18px;
-	background-position: -57px bottom; }
+label#volume-slider-label { display: inline-block; width: 23px; height: 9px; }
 
 #volume-readout { display: inline-block; width: 2.5em; margin-left: 3px; font-weight: 400; font-size: 12px; }
 label#volume-slider-label { vertical-align: baseline; margin-right: 3px; }
@@ -93,7 +90,7 @@ label#volume-slider-label { vertical-align: baseline; margin-right: 3px; }
 .freq-button:hover { color: #C97438; }
 */
  
-.freq-button { display: inline-block; width: 24px; height: 32px; background-image: url('icons.png'); background-size: auto 32px;
+.freq-button { display: inline-block; width: 24px; height: 32px;
 	vertical-align: -30%; cursor: pointer; outline: none; }
 #freq-down-button { background-position: 0px 0px; }
 #freq-up-button { background-position: -26px 0px; }
@@ -106,10 +103,9 @@ label#volume-slider-label { vertical-align: baseline; margin-right: 3px; }
     border-radius: 3px; box-shadow: -1px 1px 1px 0px rgba(0,0,0,0.4); }
 .octave-button:hover { background: #C97438; }	
 
-label#note-selector-label { display: inline-block; margin-right: 4px; width: 9px; height: 18px;
-	background-image: url('icons.png'); background-size: auto 20px; background-position: -91px -1px; }
+label#note-selector-label { display: inline-block; margin-right: 4px; width: 9px; height: 18px;}
 
-.ui-state-default .ui-icon { background-image: url('./js/smoothness/images/ui-icons_f2ceb5_256x240.png'); }
+.ui-state-default .ui-icon { }
 .ui-widget { font-family: inherit; font-size: 12px; color: #F5DBC6 }
 .ui-selectmenu-button { box-shadow: -1px 2px 1px 1px rgba(0,0,0,0.4); border-radius: 2px; vertical-align: bottom; margin-bottom: 6px; }
 .ui-selectmenu-button span.ui-selectmenu-text { padding: 0.2em 2.1em 0.2em 0.5em; }
