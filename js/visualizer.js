@@ -127,7 +127,7 @@ function visualize() {
   HEIGHT = canvas.height;
 
 
-  var visualSetting = "frequencybars";
+  var visualSetting = "laura";
   console.log(visualSetting);
 
   if(visualSetting == "sinewave") {
@@ -207,7 +207,55 @@ function visualize() {
 
     draw();
 
-  } else if(visualSetting == "off") {
+  } else if(visualSetting == "laura") {
+        analyser.fftSize = 1024;
+        var bufferLength = analyser.frequencyBinCount;
+        console.log(bufferLength);
+        var dataArray = new Float32Array(bufferLength);
+
+        canvasCtx.clearRect(0, 0, WIDTH, HEIGHT);
+
+        function draw() {
+
+          drawVisual = requestAnimationFrame(draw);
+
+          analyser.getFloatFrequencyData(dataArray);
+
+          canvasCtx.fillStyle = 'rgb(0, 0, 0)';
+          canvasCtx.fillRect(0, 0, WIDTH, HEIGHT);
+
+          canvasCtx.lineWidth = 2;
+          canvasCtx.strokeStyle = 'rgb(0, 255, 0)';
+
+          canvasCtx.beginPath();
+
+          var sliceWidth = WIDTH * 1.0 / bufferLength;
+          var x = 0;
+          var yzero = 140;
+
+          canvasCtx.moveTo(0, yzero);
+          canvasCtx.lineTo(WIDTH, yzero);
+          
+          for(var i = 0; i < bufferLength; i++) {
+       
+            var v = (dataArray[i] + yzero)*2;
+            var y = HEIGHT - v;
+
+            if(i === 0) {
+              canvasCtx.moveTo(x, y);
+            } else {
+              canvasCtx.lineTo(x, y);
+            }
+
+            x += sliceWidth;
+          }
+
+          canvasCtx.lineTo(canvas.width, canvas.height/2);
+          canvasCtx.stroke();
+        };
+
+        draw();
+    } else if(visualSetting == "off") {
     canvasCtx.clearRect(0, 0, WIDTH, HEIGHT);
     canvasCtx.fillStyle = "red";
     canvasCtx.fillRect(0, 0, WIDTH, HEIGHT);

@@ -25,6 +25,37 @@ if (window.matchMedia && window.matchMedia('(max-device-width: 460px)').matches)
 <span class=button id="play-button" tabindex="0" title="Play/Stop [Space]" onclick="onPlayButtonClick()">Play</span>
 <span id="play-indicator" class="stopped"></span>
 
+<table width="100%">
+    <tr>
+        <td>
+            <div class="btn-group" id="harmonics-left">
+            <button type="button" class="btn btn-primary">1</button>
+            <button type="button" class="btn btn-primary">2</button>
+            <button type="button" class="btn btn-primary">3</button>
+            <button type="button" class="btn btn-primary">4</button>
+            <button type="button" class="btn btn-primary">5</button>
+            <button type="button" class="btn btn-primary">6</button>
+            <button type="button" class="btn btn-primary">7</button>
+            <button type="button" class="btn btn-primary">8</button>
+            <button type="button" class="btn btn-primary">9</button>
+            </div>
+        </td>
+        <td>
+            <div class="btn-group" id="harmonics-right">
+            <button type="button" class="btn btn-primary">1</button>
+            <button type="button" class="btn btn-primary">2</button>
+            <button type="button" class="btn btn-primary">3</button>
+            <button type="button" class="btn btn-primary">4</button>
+            <button type="button" class="btn btn-primary">5</button>
+            <button type="button" class="btn btn-primary">6</button>
+            <button type="button" class="btn btn-primary">7</button>
+            <button type="button" class="btn btn-primary">8</button>
+            <button type="button" class="btn btn-primary">9</button>
+            </div>
+        </td>
+    </tr>
+</table>
+
 <div id="slider" style="margin: 40px 0px 18px 0px"></div>
 <div id="controls">
     <span style="display: inline-block; margin-bottom: 15px">
@@ -48,7 +79,7 @@ if (window.matchMedia && window.matchMedia('(max-device-width: 460px)').matches)
 </div>
 
 <div class="wrapper">
-    <canvas class="visualizer" width="640" height="100"></canvas>
+    <canvas class="visualizer" width="640" height="200"></canvas>
     <script src="./js/visualizer.js"></script>
 </div>
 
