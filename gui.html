@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=460,initial-scale=1">
+<script>
+if (window.matchMedia && window.matchMedia('(max-device-width: 460px)').matches) {
+	viewport = document.querySelector('meta[name=viewport]');
+	if (viewport) viewport.setAttribute('content', 'width=460');
+}
+</script>
+<title>Online Tone Generator - generate pure tones of any frequency</title>
+<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,400italic,600' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/themes/smoothness/jquery-ui.css">
+<link rel="stylesheet" href="./css/style.css">
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/jquery-ui.js"></script>
+<script src="./js/frequency-generator.mini.js"></script>
+<script src="./js/herlant.js"></script>
+</head>
+<body>
+<div id=content>
+<h1>Future Piano Tuner Demo</h1>
+
+<span class=button id="play-button" tabindex="0" title="Play/Stop [Space]" onclick="onPlayButtonClick()">Play</span>
+<span id="play-indicator" class="stopped"></span>
+
+<div id="slider" style="margin: 40px 0px 18px 0px"></div>
+<div id="controls">
+    <span style="display: inline-block; margin-bottom: 15px">
+        <label id="volume-slider-label"></label>    
+        <span id="volume-slider"></span>
+        <span id="volume-readout"></span>
+        <span class=separator></span>
+    </span>
+    <span style="display: inline-block; white-space: nowrap; margin-bottom: 15px;">
+        <span class="octave-button" id="octave-down-button" tabindex="0" title="− 1 octave (frequency ÷ 2)" style="margin-right: 10px">×½</span>
+        <span class="freq-button" id="freq-down-button" tabindex="0" title="– 1 Hz [Shift+←]"></span>
+        <span id="freq-readout"></span>
+        <span class="freq-button" id="freq-up-button" tabindex="0" title="+ 1 Hz [Shift+→]"></span>
+        <span class="octave-button" id="octave-up-button" tabindex="0" title="+ 1 octave (frequency × 2)" style="margin-left: 10px;">×2</span>
+        <span class=separator></span>
+        <label id="note-selector-label"></label>
+        <select name="note-selector" id="note-selector" style="width: 95px;">
+            <option value="">pick note</option>
+        </select>
+    </span>
+</div>
+
+<table width="100%">
+    <tr>
+        <td>
+        <center>Left</center>
+        </td>
+        <td>
+        <center>Controls</center>
+        </td>
+        <td>
+        <center>Right</center>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <center>
+            <form>
+                Frequency <br>
+                <input type="number" name="frequency" value="440" min="0" max="1000">
+                <br>Harmonics<br>
+                <input type="button" value="1">
+                <input type="button" value="2">
+                <input type="button" value="3">
+                <input type="button" value="4">
+                <input type="button" value="5">
+                <input type="button" value="6">
+                <input type="button" value="7">
+                <input type="button" value="8">
+                <input type="button" value="9">
+                <br>Damping<br>
+                <input type="number" name="damping" value="1.0" step="0.1" max="1.0" min="0.0">
+                <br>Inharmonicity<br>
+                <input type="number" name="inharmonicity" value="0.0000" step="0.0001">
+                <br>
+            </form>
+            </center>
+        </td>
+        <td>
+            <center>
+            <form>
+                <input type="button" value="Start"><br>
+                <input type="button" value="Pause">
+                <input type="button" value="Resume"><br>
+                <input type="button" value="Left">
+                <input type="button" value="Right"><br>
+                <input type="button" value="Both (avg)"><br>
+                <input type="button" value="Stereo"><br>
+                Volume <br>
+                <input type="range" name="volume" min="0" max="1">
+            </form>
+            </center>
+        </td>
+        <td>
+            <center>
+            <form>
+                Frequency <br>
+                <input type="number" name="frequency" value="440" min="0" max="1000">
+                <br>Harmonics<br>
+                <input type="button" value="1">
+                <input type="button" value="2">
+                <input type="button" value="3">
+                <input type="button" value="4">
+                <input type="button" value="5">
+                <input type="button" value="6">
+                <input type="button" value="7">
+                <input type="button" value="8">
+                <input type="button" value="9">
+                <br>Damping<br>
+                <input type="number" name="damping" value="1.0" step="0.1" max="1.0" min="0.0">
+                <br>Inharmonicity<br>
+                <input type="number" name="inharmonicity" value="0.0000" step="0.0001">
+                <br>
+            </form>
+            </center>
+        </td>
+    </tr>
+</table>
+
+
+<div class="wrapper">
+    <canvas class="visualizer" width="640" height="100"></canvas>
+    <script src="./js/visualizer.js"></script>
+</div>
+
+<h2>Instructions</h2>
+<p>
+To play a constant pure tone (sine wave), click <span class=button-name>Play</span> or press <kbd>Space</kbd>.
+To change the frequency being played, drag the slider or press <kbd>←</kbd> <kbd>→</kbd> (arrow keys).
+To decrease/increase the frequency by 1 Hz, use the <span style="color: #9b5622;">&#x25C0;</span> and <span style="color: #9b5622;">&#x25B6;</span>
+buttons or press <kbd>Shift + ←</kbd> and <kbd>Shift + →</kbd>.
+To halve/double the frequency (go down/up one octave), click <span class=button-name>×½</span> and <span class=button-name>×2</span>.
+</p>
+
+
+</div>
+</body>
+</html>
