@@ -15,37 +15,12 @@ if (window.matchMedia && window.matchMedia('(max-device-width: 460px)').matches)
 <link rel="stylesheet" href="./css/style.css">
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.js"></script>
 <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/jquery-ui.js"></script>
-<script src="./js/frequency-generator.mini.js"></script>
+<script src="./js/player.js"></script>
 <script src="./js/herlant.js"></script>
 </head>
 <body>
 <div id=content>
-<h1>Future Piano Tuner Demo</h1>
-
-<span class=button id="play-button" tabindex="0" title="Play/Stop [Space]" onclick="onPlayButtonClick()">Play</span>
-<span id="play-indicator" class="stopped"></span>
-
-<div id="slider" style="margin: 40px 0px 18px 0px"></div>
-<div id="controls">
-    <span style="display: inline-block; margin-bottom: 15px">
-        <label id="volume-slider-label"></label>    
-        <span id="volume-slider"></span>
-        <span id="volume-readout"></span>
-        <span class=separator></span>
-    </span>
-    <span style="display: inline-block; white-space: nowrap; margin-bottom: 15px;">
-        <span class="octave-button" id="octave-down-button" tabindex="0" title="− 1 octave (frequency ÷ 2)" style="margin-right: 10px">×½</span>
-        <span class="freq-button" id="freq-down-button" tabindex="0" title="– 1 Hz [Shift+←]"></span>
-        <span id="freq-readout"></span>
-        <span class="freq-button" id="freq-up-button" tabindex="0" title="+ 1 Hz [Shift+→]"></span>
-        <span class="octave-button" id="octave-up-button" tabindex="0" title="+ 1 octave (frequency × 2)" style="margin-left: 10px;">×2</span>
-        <span class=separator></span>
-        <label id="note-selector-label"></label>
-        <select name="note-selector" id="note-selector" style="width: 95px;">
-            <option value="">pick note</option>
-        </select>
-    </span>
-</div>
+<center><h1>Future Piano Tuner Demo</h1></center>
 
 <table width="100%">
     <tr>
@@ -64,19 +39,19 @@ if (window.matchMedia && window.matchMedia('(max-device-width: 460px)').matches)
             <center>
             <form>
                 Frequency <br>
-                <input type="number" name="frequency" value="440" min="0" max="1000">
+                <input type="number" name="frequency" id="left_f0" value="440" min="0" max="1000" onchange="change_frequency('left',this.value)">
                 <br>Harmonics<br>
-                <input type="button" value="1">
-                <input type="button" value="2">
-                <input type="button" value="3">
-                <input type="button" value="4">
-                <input type="button" value="5">
-                <input type="button" value="6">
-                <input type="button" value="7">
-                <input type="button" value="8">
-                <input type="button" value="9">
+                <input type="button" id="buttonL1" value="1" onclick="toggle_harmonics('left', 1)">
+                <input type="button" id="buttonL2" value="2" onclick="toggle_harmonics('left', 2)">
+                <input type="button" id="buttonL3" value="3" onclick="toggle_harmonics('left', 3)">
+                <input type="button" id="buttonL4" value="4" onclick="toggle_harmonics('left', 4)">
+                <input type="button" id="buttonL5" value="5" onclick="toggle_harmonics('left', 5)">
+                <input type="button" id="buttonL6" value="6" onclick="toggle_harmonics('left', 6)">
+                <input type="button" id="buttonL7" value="7" onclick="toggle_harmonics('left', 7)">
+                <input type="button" id="buttonL8" value="8" onclick="toggle_harmonics('left', 8)">
+                <input type="button" id="buttonL9" value="9" onclick="toggle_harmonics('left', 9)">
                 <br>Damping<br>
-                <input type="number" name="damping" value="1.0" step="0.1" max="1.0" min="0.0">
+                <input type="number" name="damping" value="1.0" step="0.1" max="1.0" min="0.0" onchange="change_damping('left',this.value)">
                 <br>Inharmonicity<br>
                 <input type="number" name="inharmonicity" value="0.0000" step="0.0001">
                 <br>
@@ -86,15 +61,13 @@ if (window.matchMedia && window.matchMedia('(max-device-width: 460px)').matches)
         <td>
             <center>
             <form>
-                <input type="button" value="Start"><br>
-                <input type="button" value="Pause">
-                <input type="button" value="Resume"><br>
-                <input type="button" value="Left">
-                <input type="button" value="Right"><br>
+                <input type="button" id="play_button" value="Play" onclick="toggle_play()"><br>
+                <input type="button" value="Left" id="button_left" onclick="toggle_channel('left')">
+                <input type="button" value="Right" id="button_right" onclick="toggle_channel('right')"><br>
                 <input type="button" value="Both (avg)"><br>
                 <input type="button" value="Stereo"><br>
                 Volume <br>
-                <input type="range" name="volume" min="0" max="1">
+                <input type="range" name="volume" id="volume" min="0" max="1" value="0.5" step="0.1" onchange="change_volume(this.value)">
             </form>
             </center>
         </td>
@@ -102,19 +75,19 @@ if (window.matchMedia && window.matchMedia('(max-device-width: 460px)').matches)
             <center>
             <form>
                 Frequency <br>
-                <input type="number" name="frequency" value="440" min="0" max="1000">
+                <input type="number" name="frequency" id="right_f0" value="440" min="0" max="1000" onchange="change_frequency('right',this.value)">
                 <br>Harmonics<br>
-                <input type="button" value="1">
-                <input type="button" value="2">
-                <input type="button" value="3">
-                <input type="button" value="4">
-                <input type="button" value="5">
-                <input type="button" value="6">
-                <input type="button" value="7">
-                <input type="button" value="8">
-                <input type="button" value="9">
+                <input type="button" id="buttonR1" value="1" onclick="toggle_harmonics('right', 1)">
+                <input type="button" id="buttonR2" value="2" onclick="toggle_harmonics('right', 2)">
+                <input type="button" id="buttonR3" value="3" onclick="toggle_harmonics('right', 3)">
+                <input type="button" id="buttonR4" value="4" onclick="toggle_harmonics('right', 4)">
+                <input type="button" id="buttonR5" value="5" onclick="toggle_harmonics('right', 5)">
+                <input type="button" id="buttonR6" value="6" onclick="toggle_harmonics('right', 6)">
+                <input type="button" id="buttonR7" value="7" onclick="toggle_harmonics('right', 7)">
+                <input type="button" id="buttonR8" value="8" onclick="toggle_harmonics('right', 8)">
+                <input type="button" id="buttonR9" value="9" onclick="toggle_harmonics('right', 9)">
                 <br>Damping<br>
-                <input type="number" name="damping" value="1.0" step="0.1" max="1.0" min="0.0">
+                <input type="number" name="damping" value="1.0" step="0.1" max="1.0" min="0.0" onchange="change_damping('right',this.value)">
                 <br>Inharmonicity<br>
                 <input type="number" name="inharmonicity" value="0.0000" step="0.0001">
                 <br>
@@ -126,19 +99,9 @@ if (window.matchMedia && window.matchMedia('(max-device-width: 460px)').matches)
 
 
 <div class="wrapper">
-    <canvas class="visualizer" width="640" height="100"></canvas>
+    <canvas class="visualizer" width="640" height="200"></canvas>
     <script src="./js/visualizer.js"></script>
 </div>
-
-<h2>Instructions</h2>
-<p>
-To play a constant pure tone (sine wave), click <span class=button-name>Play</span> or press <kbd>Space</kbd>.
-To change the frequency being played, drag the slider or press <kbd>←</kbd> <kbd>→</kbd> (arrow keys).
-To decrease/increase the frequency by 1 Hz, use the <span style="color: #9b5622;">&#x25C0;</span> and <span style="color: #9b5622;">&#x25B6;</span>
-buttons or press <kbd>Shift + ←</kbd> and <kbd>Shift + →</kbd>.
-To halve/double the frequency (go down/up one octave), click <span class=button-name>×½</span> and <span class=button-name>×2</span>.
-</p>
-
 
 </div>
 </body>

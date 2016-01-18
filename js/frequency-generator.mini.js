@@ -66,6 +66,7 @@ var tones=
 {
     playing:false,
     volume:1,
+    arrEn:[0,0,0,0,0,0,0,0,0],
     play:function(f)
     {
         this.n = 9;
@@ -91,8 +92,11 @@ var tones=
             
             // Set the gains for playing, and start the oscillators
             for(var i=0; i<this.n; i++) {
-                this.gainNodes[i].gain.linearRampToValueAtTime(0,window.context.currentTime);
-                this.gainNodes[i].gain.linearRampToValueAtTime(this.volume*Math.pow(this.d,i),window.context.currentTime+FADE_TIME);
+                if(this.arrEn[i])
+                {
+                    this.gainNodes[i].gain.linearRampToValueAtTime(0,window.context.currentTime);
+                    this.gainNodes[i].gain.linearRampToValueAtTime(this.volume*Math.pow(this.d,i),window.context.currentTime+FADE_TIME);
+                } 
                 this.oscillators[i].start(0);
             }
         } 
@@ -131,5 +135,29 @@ var tones=
             }
             
         }this.volume=a
+    },
+    enableHarmonics:function(inEn)
+    {
+        
+        var a=window.context.currentTime;
+        for(var i=0; i<this.n; i++)
+        {
+            if(inEn[i] == 0 && this.arrEn[i] == 1)
+            {
+                // if the node is on, turn it off
+                this.gainNodes[i].gain.linearRampToValueAtTime(this.gainNodes[i].gain.value,a+0.05);
+                this.gainNodes[i].gain.linearRampToValueAtTime(0,a+0.05+FADE_TIME);
+                console.log('Stopping Node '.concat(i.toString()));
+            } else if (inEn[i] == 1 && this.arrEn[i] == 0) 
+            {
+                // if the node is off, turn it on
+                this.gainNodes[i].gain.linearRampToValueAtTime(this.gainNodes[i].gain.value,a);
+                this.gainNodes[i].gain.linearRampToValueAtTime(this.volume*Math.pow(this.d,i),a+FADE_TIME);
+                console.log('Starting Node '.concat(i.toString()));
+            }
+        }
+        this.arrEn = inEn
     }
 };
+
+
