@@ -1,10 +1,7 @@
 /*!
  *
- * Copyright 2016, Laura Herlant
+ * Copyright 2016, Laura and Francois Herlant
  *
- * Depends:
- *  jquery.ui.widget.js
- *  jquery.ui.mouse.js
  */
 
 
@@ -95,15 +92,18 @@ var player=
     init:function()
     {
         var f0 = 440;
+        this.merger_node = window.context.createChannelMerger(2);
         
         // intially disable all harmonics
         for(var i=0; i<this.n_harmonics; i++){
             this.left_harmonics_en.push(false);
             this.right_harmonics_en.push(false);
         }
-
-        w = window;
-        c = w.context;
+        
+        silence = window.context.createBufferSource();
+        silence.connect(this.merger_node, 0, 0);
+        silence.connect(this.merger_node, 0, 1);
+        
         for(var i=0; i<this.n_harmonics+1; i++){
             // Create oscillators
             this.left_oscillators.push(window.context.createOscillator());
@@ -117,9 +117,15 @@ var player=
             // Set initial frequency values
             this.left_oscillators[i].frequency.value = f0*(i+1);
             this.right_oscillators[i].frequency.value = f0*(i+1);
+            
             // Connect Gain nodes to the audio output
-            this.left_gain_nodes[i].connect(window.context.destination);
-            this.right_gain_nodes[i].connect(window.context.destination);
+            //this.left_gain_nodes[i].connect(window.context.destination);
+            //this.right_gain_nodes[i].connect(window.context.destination);
+            
+            // Connect the gain nodes to the merger node
+            this.left_gain_nodes[i].connect(this.merger_node, 0, 0);
+            this.right_gain_nodes[i].connect(this.merger_node, 0, 1);
+            
             // Set gains to zero
             this.left_gain_nodes[i].gain = 0;
             this.right_gain_nodes[i].gain = 0;
@@ -127,6 +133,9 @@ var player=
             this.left_oscillators[i].start();
             this.right_oscillators[i].start();
         }
+        
+        // Connect the merger node to the destination
+        this.merger_node.connect(window.context.destination);
         
         this.update();
     }
