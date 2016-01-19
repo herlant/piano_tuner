@@ -125,6 +125,17 @@ function toggle_channel(channel)
     player.update();    
 }
 
+function toggle_stereo()
+{
+    button = document.getElementById("mix");
+    player.toggle_stereo();
+    if(player.stereo) {
+        button.style.background='lightgrey';
+    } else {
+        button.style.background='yellow';
+    }
+}
+
 var noteNames = [ "", 
     "A0 Double Pedal A",
     "A♯0/B♭0",

@@ -32,6 +32,8 @@ var player=
     right_harmonics_en:[],// Boolean array of length n_harmonics showing which are enabled
     right_f0:440,
     right_damping:1.0,            // Damping coefficient, range 0-1
+    
+    stereo:true,
 
     // These are functions that are called internally
     update:function()
@@ -138,6 +140,31 @@ var player=
         this.merger_node.connect(window.context.destination);
         
         this.update();
+    },
+    
+    toggle_stereo:function()
+    {
+        if(this.stereo){
+            this.merger_node.disconnect();
+            for(var i=0; i<this.n_harmonics+1; i++) {
+                this.left_gain_nodes[i].connect(window.context.destination);
+                this.right_gain_nodes[i].connect(window.context.destination);
+            }
+            this.stereo = false;
+        } else {
+            this.merger_node = window.context.createChannelMerger(2);
+            silence = window.context.createBufferSource();
+            silence.connect(this.merger_node, 0, 0);
+            silence.connect(this.merger_node, 0, 1)
+            this.merger_node.connect(window.context.destination);
+            for(var i=0; i<this.n_harmonics+1; i++) {
+                this.left_gain_nodes[i].connect(this.merger_node, 0, 0);
+                this.right_gain_nodes[i].connect(this.merger_node, 0, 1);
+            }
+            
+            
+            this.stereo = true;
+        }            
     }
    
 };

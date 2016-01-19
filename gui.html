@@ -64,9 +64,8 @@ if (window.matchMedia && window.matchMedia('(max-device-width: 460px)').matches)
                 <input type="button" id="play_button" value="Play" onclick="toggle_play()"><br>
                 <input type="button" value="Left" id="button_left" onclick="toggle_channel('left')">
                 <input type="button" value="Right" id="button_right" onclick="toggle_channel('right')"><br>
-                <input type="button" value="Both (avg)"><br>
-                <input type="button" value="Stereo"><br>
-                Volume <br>
+                <input type="button" id="mix" value="Mix" onclick="toggle_stereo()"><br>
+                <br> Volume <br>
                 <input type="range" name="volume" id="volume" min="0" max="1" value="0.5" step="0.1" onchange="change_volume(this.value)">
             </form>
             </center>
