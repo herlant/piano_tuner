@@ -23,6 +23,10 @@ function init() {
     player.left_f0 = document.getElementById("left_f0").value;
     player.right_f0 = document.getElementById("right_f0").value;
     player.volume = document.getElementById("volume").value;
+    player.left_damping = document.getElementById("left_damping").value;
+    player.right_damping = document.getElementById("right_damping").value;
+    player.left_inharmonicity = document.getElementById("left_inharmonicity").value;
+    player.right_inharmonicity = document.getElementById("right_inharmonicity").value;
     player.update();
     
     //player.start_oscillators();
@@ -86,6 +90,19 @@ function change_damping(channel, val)
         break;
         case "right":
             player.right_damping = val;
+        break;
+    }
+    player.update();
+}
+
+function change_inharmonicity(channel, val)
+{
+    switch(channel) {
+        case "left":
+            player.left_inharmonicity = val;
+        break;
+        case "right":
+            player.right_inharmonicity = val;
         break;
     }
     player.update();
