@@ -25,6 +25,7 @@ var player=
     left_harmonics_en:[], // Boolean array of length n_harmonics showing which are enabled
     left_f0:440,
     left_damping:1.0,            // Damping coefficient, range 0-1
+    left_inharmonicity:0.0,
     
     right_en:false,          // Enable playing on the right channel
     right_oscillators:[], // Array containing the oscillators for the right channel (should be n_harmonics+1 oscillators per channel)
@@ -32,6 +33,7 @@ var player=
     right_harmonics_en:[],// Boolean array of length n_harmonics showing which are enabled
     right_f0:440,
     right_damping:1.0,            // Damping coefficient, range 0-1
+    right_inharmonicity:0.0,
     
     stereo:true,
 
@@ -46,7 +48,7 @@ var player=
                 this.left_gain_nodes[0].gain.linearRampToValueAtTime(this.volume, t+this.fade_time); // start fundamental frequency playing
                 
                 for(var i=1; i<this.n_harmonics+1; i++) { // loop over harmonics
-                    this.left_oscillators[i].frequency.value = this.left_f0*(i+1); // set harmonic frequency
+                    this.left_oscillators[i].frequency.value = this.left_f0*(i+1)*Math.sqrt(1+this.left_inharmonicity*Math.pow(i+1,2));
                     if(this.left_harmonics_en[i]) { // if harmonics is enabled, start the oscillator
                         var new_gain = this.volume*Math.pow(this.left_damping,i);
                         this.left_gain_nodes[i].gain.linearRampToValueAtTime(new_gain, t+this.fade_time); // set gain to the right level with fade
@@ -66,7 +68,7 @@ var player=
                 this.right_gain_nodes[0].gain.linearRampToValueAtTime(this.volume, t+this.fade_time); // start fundamental frequency playing
                 
                 for(var i=1; i<this.n_harmonics+1; i++) { // loop over harmonics
-                    this.right_oscillators[i].frequency.value = this.right_f0*(i+1); // set harmonic frequency
+                    this.right_oscillators[i].frequency.value = this.right_f0*(i+1)*Math.sqrt(1+this.right_inharmonicity*Math.pow(i+1,2));
                     if(this.right_harmonics_en[i]) { // if harmonics is enabled, start the oscillator
                         var new_gain = this.volume*Math.pow(this.right_damping,i);
                         this.right_gain_nodes[i].gain.linearRampToValueAtTime(new_gain, t+this.fade_time); // set gain to the right level with fade

@@ -58,6 +58,8 @@ function visualize() {
             return;
         }
         
+        min = -100;
+        
         if(max != min) {
             scale = HEIGHT/(max-min);
         } else {
