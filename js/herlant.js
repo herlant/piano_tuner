@@ -30,6 +30,7 @@ function init() {
     player.update();
     
     //player.start_oscillators();
+    visualize();
 }
 
 function toggle_play()

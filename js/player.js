@@ -143,6 +143,11 @@ var player=
         // Connect the merger node to the destination
         this.merger_node.connect(window.context.destination);
         
+        // Set analyser node parameters
+        this.left_analyser_node.minDecibels = -100;
+        this.left_analyser_node.maxDecibels = 100;
+        
+        
         this.update();
     },
     

@@ -13,14 +13,10 @@ if (window.matchMedia && window.matchMedia('(max-device-width: 460px)').matches)
 <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,400italic,600' rel='stylesheet' type='text/css'>
 <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/themes/smoothness/jquery-ui.css">
 <link rel="stylesheet" href="./css/style.css">
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.js"></script>
-<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/jquery-ui.js"></script>
-<script src="./js/player.js"></script>
-<script src="./js/herlant.js"></script>
 </head>
 <body>
 <div id=content>
-<center><h1>Future Piano Tuner Demo</h1></center>
+<center><h1>Piano Tuner</h1></center>
 
 <table width="100%">
     <tr>
@@ -98,10 +94,14 @@ if (window.matchMedia && window.matchMedia('(max-device-width: 460px)').matches)
 
 
 <div class="wrapper">
-    <canvas class="visualizer" width="640" height="200"></canvas>
-    <script src="./js/visualizer.js"></script>
+    <canvas class="visualizer" id="fft_plot" width="640" height="200"></canvas>
 </div>
 
 </div>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/jquery-ui.js"></script>
+<script src="./js/player.js"></script>
+<script src="./js/herlant.js"></script>
+<script src="./js/graphing.js"></script>
 </body>
 </html>
