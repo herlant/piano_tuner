@@ -34,6 +34,7 @@ var player=
     right_damping:1.0,            // Damping coefficient, range 0-1
     
     stereo:true,
+    started:false,
 
     // These are functions that are called internally
     update:function()
@@ -131,15 +132,23 @@ var player=
             // Set gains to zero
             this.left_gain_nodes[i].gain = 0;
             this.right_gain_nodes[i].gain = 0;
-            // Start oscillators
-            this.left_oscillators[i].start();
-            this.right_oscillators[i].start();
+
         }
         
         // Connect the merger node to the destination
         this.merger_node.connect(window.context.destination);
         
         this.update();
+    },
+    
+    start_oscillators:function()
+    {
+        for(var i=0; i<this.n_harmonics+1; i++)
+        {
+            // Start oscillators
+            this.left_oscillators[i].start();
+            this.right_oscillators[i].start();
+        }
     },
     
     toggle_stereo:function()

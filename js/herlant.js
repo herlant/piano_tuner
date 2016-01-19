@@ -24,10 +24,16 @@ function init() {
     player.right_f0 = document.getElementById("right_f0").value;
     player.volume = document.getElementById("volume").value;
     player.update();
+    
+    //player.start_oscillators();
 }
 
 function toggle_play()
 {
+    if(!player.started) {
+        player.start_oscillators();
+        player.started = true;
+    }
     button = document.getElementById("play_button");
     if(player.playing) {
         player.playing = false;
