@@ -6,10 +6,17 @@ var i_min;
 var i_max;
 
 
+
+
+
 function visualize() {
     var canvas = document.querySelector('.visualizer');
     var canvasCtx = canvas.getContext("2d");
 
+    // scale the size of the viewer to be the width of the screen
+    var intendedWidth = document.querySelector('.wrapper').clientWidth;
+    canvas.setAttribute('width',intendedWidth);
+        
     var WIDTH = canvas.width;
     var HEIGHT = canvas.height;
 
@@ -31,7 +38,7 @@ function visualize() {
         
         // get start and end indices based on frequency range
         var min_freq = Math.min(player.left_f0, player.right_f0) - 100;
-        var max_freq = Math.max(player.left_f0, player.right_f0)*player.n_harmonics + 100;
+        var max_freq = Math.max(player.left_f0, player.right_f0)*(player.n_harmonics+1) + 100;
         
         i_min = Math.round(min_freq*player.left_analyser_node.fftSize / sample_rate);
         i_max = Math.round(max_freq*player.left_analyser_node.fftSize / sample_rate);
