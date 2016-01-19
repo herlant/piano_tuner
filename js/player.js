@@ -95,7 +95,8 @@ var player=
     {
         var f0 = 440;
         this.merger_node = window.context.createChannelMerger(2);
-        this.analyser_node = window.context.createAnalyser();
+        this.left_analyser_node = window.context.createAnalyser();
+        this.right_analyser_node = window.context.createAnalyser();
         
         // intially disable all harmonics
         for(var i=0; i<this.n_harmonics; i++){
@@ -125,9 +126,9 @@ var player=
             //this.left_gain_nodes[i].connect(window.context.destination);
             //this.right_gain_nodes[i].connect(window.context.destination);
             
-            // Connect the gain nodes to the merger node
-            this.left_gain_nodes[i].connect(this.merger_node, 0, 0);
-            this.right_gain_nodes[i].connect(this.merger_node, 0, 1);
+            // Connect the gain nodes to the analyser node
+            this.left_gain_nodes[i].connect(this.left_analyser_node);
+            this.right_gain_nodes[i].connect(this.right_analyser_node);
             
             // Set gains to zero
             this.left_gain_nodes[i].gain = 0;
@@ -135,9 +136,12 @@ var player=
 
         }
         
+        // Connect analyser nodes to the merger node
+        this.left_analyser_node.connect(this.merger_node, 0, 0);
+        this.right_analyser_node.connect(this.merger_node, 0, 1);
+        
         // Connect the merger node to the destination
-        this.merger_node.connect(this.analyser_node);
-        this.analyser_node.connect(window.context.destination);
+        this.merger_node.connect(window.context.destination);
         
         this.update();
     },
@@ -155,10 +159,8 @@ var player=
     {
         if(this.stereo){
             this.merger_node.disconnect();
-            for(var i=0; i<this.n_harmonics+1; i++) {
-                this.left_gain_nodes[i].connect(window.context.destination);
-                this.right_gain_nodes[i].connect(window.context.destination);
-            }
+            this.left_analyser_node.connect(window.context.destination);
+            this.right_analyser_node.connect(window.context.destination);
             this.stereo = false;
         } else {
             this.merger_node = window.context.createChannelMerger(2);
@@ -166,12 +168,8 @@ var player=
             silence.connect(this.merger_node, 0, 0);
             silence.connect(this.merger_node, 0, 1)
             this.merger_node.connect(window.context.destination);
-            for(var i=0; i<this.n_harmonics+1; i++) {
-                this.left_gain_nodes[i].connect(this.merger_node, 0, 0);
-                this.right_gain_nodes[i].connect(this.merger_node, 0, 1);
-            }
-            
-            
+            this.left_analyser_node.connect(this.merger_node, 0, 0);
+            this.right_analyser_node.connect(this.merger_node, 0, 1);
             this.stereo = true;
         }            
     }   
