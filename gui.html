@@ -18,6 +18,14 @@ if (window.matchMedia && window.matchMedia('(max-device-width: 460px)').matches)
 <div id=content>
 <center><h1>Piano Tuner</h1></center>
 
+<div class="wrapper">
+    <canvas class="visualizer" id="fft_plot" width="640" height="300"></canvas>
+    <form>
+        <input type="checkbox" name="viewer" value="microphone"> Microphone
+    </form>
+</div>
+
+
 <table width="100%">
     <tr>
         <td>
@@ -29,13 +37,16 @@ if (window.matchMedia && window.matchMedia('(max-device-width: 460px)').matches)
         <td>
         <center>Right</center>
         </td>
+        <td>
+        <center>Display Controls</center>
+        </td>
     </tr>
     <tr>
         <td>
             <center>
             <form>
                 Frequency <br>
-                <input type="number" name="frequency" id="left_f0" value="440" min="0" max="1000" onchange="change_frequency('left',this.value)">
+                <input type="number" name="frequency" id="left_f0" value="440" min="0" onchange="change_frequency('left',this.value)">
                 <br>Harmonics<br>
                 <input type="button" id="buttonL1" value="1" onclick="toggle_harmonics('left', 1)">
                 <input type="button" id="buttonL2" value="2" onclick="toggle_harmonics('left', 2)">
@@ -70,7 +81,7 @@ if (window.matchMedia && window.matchMedia('(max-device-width: 460px)').matches)
             <center>
             <form>
                 Frequency <br>
-                <input type="number" name="frequency" id="right_f0" value="440" min="0" max="1000" onchange="change_frequency('right',this.value)">
+                <input type="number" name="frequency" id="right_f0" value="440" min="0" onchange="change_frequency('right',this.value)">
                 <br>Harmonics<br>
                 <input type="button" id="buttonR1" value="1" onclick="toggle_harmonics('right', 1)">
                 <input type="button" id="buttonR2" value="2" onclick="toggle_harmonics('right', 2)">
@@ -89,19 +100,41 @@ if (window.matchMedia && window.matchMedia('(max-device-width: 460px)').matches)
             </form>
             </center>
         </td>
+        <td>
+            <center>
+            <table>
+            <tr>
+                <td>f_low</td>
+                <td></td>
+                <td>f_high</td>
+            </tr>
+                <td>
+                    <form>
+                    <input type="button" value="<"> 
+                    <input type="button" value=">"> 
+                    </form>
+                </td>
+                <td> harmonic </td>
+                <td>
+                    <button type="button">&lt;</button> 
+                    <button type="button">&gt;</button> 
+                </td>
+            </table>
+        
+            </center>
+        </td>
     </tr>
 </table>
 
+<br>
 
-<div class="wrapper">
-    <canvas class="visualizer" id="fft_plot" width="640" height="200"></canvas>
-</div>
+
 
 </div>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.js"></script>
 <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/jquery-ui.js"></script>
 <script src="./js/player.js"></script>
-<script src="./js/herlant.js"></script>
 <script src="./js/graphing.js"></script>
+<script src="./js/herlant.js"></script>
 </body>
 </html>

@@ -18,6 +18,7 @@ function init() {
 	}
 
     player.init();
+    viewer.init();
     
     // Change all the initial parameters to match those of the gui's present values
     player.left_f0 = document.getElementById("left_f0").value;

@@ -5,9 +5,37 @@ var max;
 var i_min;
 var i_max;
 
-
-
-
+var viewer = 
+{   
+    mic_analyser:[],
+    init:function()
+    {
+        
+        navigator.getUserMedia = ( navigator.getUserMedia ||
+                       navigator.webkitGetUserMedia ||
+                       navigator.mozGetUserMedia ||
+                       navigator.msGetUserMedia);
+        if(navigator.getUserMedia) {
+            console.log('getUserMedia supported.');
+            navigator.getUserMedia(
+                { audio:true }, 
+                function(stream) 
+                {
+                    viewer.source = window.context.createMediaStreamSource(stream);
+                    viewer.mic_analyser = window.context.createAnalyser();
+                    viewer.source.connect(viewer.mic_analyser);
+                    viewer.mic_analyser.connect(window.context.destination);
+                },
+                function(err)
+                {
+                    console.log('The following gUM error occured: ' + err);
+                }
+            );
+        } else {
+            console.log('getUserMedia not supported on your browser!');
+        }
+    }
+}
 
 function visualize() {
     var canvas = document.querySelector('.visualizer');
@@ -39,6 +67,15 @@ function visualize() {
         // get start and end indices based on frequency range
         var min_freq = Math.min(player.left_f0, player.right_f0) - 100;
         var max_freq = Math.max(player.left_f0, player.right_f0)*(player.n_harmonics+1) + 100;
+        
+        if(!player.right_en) {
+            min_freq = player.left_f0 - 100;
+            max_freq = player.left_f0*(player.n_harmonics+1) + 100;
+        }
+        if(!player.left_en) {
+            min_freq = player.right_f0 - 100;
+            max_freq = player.right_f0*(player.n_harmonics+1) + 100;
+        }
         
         i_min = Math.round(min_freq*player.left_analyser_node.fftSize / sample_rate);
         i_max = Math.round(max_freq*player.left_analyser_node.fftSize / sample_rate);
