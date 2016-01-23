@@ -200,6 +200,11 @@ function set_fft_size(v)
     player.right_analyser_node.fftSize = v;
 }
 
+function enable_mic(v)
+{
+    viewer.mic_en=v;
+}
+
 var noteNames = [ "", 
     "A0 Double Pedal A",
     "A♯0/B♭0",
