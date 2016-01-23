@@ -101,27 +101,36 @@ if (window.matchMedia && window.matchMedia('(max-device-width: 460px)').matches)
             </center>
         </td>
         <td>
+        <form>
             <center>
             <table>
             <tr>
                 <td>f_low</td>
-                <td></td>
-                <td>f_high</td>
+                <td><input type="number" id="f_low" value="0"></td>
             </tr>
-                <td>
-                    <form>
-                    <input type="button" value="<"> 
-                    <input type="button" value=">"> 
-                    </form>
-                </td>
-                <td> harmonic </td>
-                <td>
-                    <button type="button">&lt;</button> 
-                    <button type="button">&gt;</button> 
-                </td>
-            </table>
-        
+            <tr>
+                <td>f_high</td>
+                <td><input type="number" id="f_high" value="4400"></td>
+            </tr>
+            <tr>
+                <td>rate</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>length</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>max</td>
+                <td><input type="number" id="db_min" value="-100"></td>
+            </tr>
+            <tr>
+                <td>min</td>
+                <td><input type="number" id="db_max" value="300"></td>
+            </tr>
+            </table>        
             </center>
+            </form>
         </td>
     </tr>
 </table>
