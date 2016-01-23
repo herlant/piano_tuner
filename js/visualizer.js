@@ -47,34 +47,6 @@ function makeDistortionCurve(amount) {
   return curve;
 };
 
-// grab audio track via XHR for convolver node
-
-var soundSource, concertHallBuffer;
-
-
-ajaxRequest = new XMLHttpRequest();
-
-ajaxRequest.open('GET', 'http://mdn.github.io/voice-change-o-matic/audio/concert-crowd.ogg', true);
-
-ajaxRequest.responseType = 'arraybuffer';
-
-
-ajaxRequest.onload = function() {
-  var audioData = ajaxRequest.response;
-
-  audioCtx.decodeAudioData(audioData, function(buffer) {
-      concertHallBuffer = buffer;
-      soundSource = audioCtx.createBufferSource();
-      soundSource.buffer = concertHallBuffer;
-    }, function(e){"Error with decoding audio data" + e.err});
-
-  //soundSource.connect(audioCtx.destination);
-  //soundSource.loop = true;
-  //soundSource.start();
-}
-
-ajaxRequest.send();
-
 // set up canvas context for visualizer
 
 var canvas = document.querySelector('.visualizer');

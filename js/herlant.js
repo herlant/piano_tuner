@@ -30,8 +30,11 @@ function init() {
     player.right_inharmonicity = document.getElementById("right_inharmonicity").value;
     player.update();
     
-    //player.start_oscillators();
+    // player.start_oscillators();
     visualize();
+    
+    // display sampling rate 
+    document.getElementById("sample_rate").value = window.context.sampleRate;
 }
 
 function toggle_play()
