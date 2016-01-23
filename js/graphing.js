@@ -42,8 +42,8 @@ var viewer =
         this.db_min = document.getElementById("db_min").value;
         this.db_max = document.getElementById("db_max").value;
         this.f_low = document.getElementById("f_low").value;
-        this.f_high = document.getElementById("f_high").value;
-        this.fft_size = document.getElementById("fft_size").value;
+        this.f_high = document.getElementById("f_high").value; 
+        set_fft_size(document.getElementById("fft_size").value);
     }
 }
 
@@ -85,9 +85,14 @@ function visualize() {
         
         var x=0;
         var y=0;
-        var delx = WIDTH / player.left_analyser_node.frequencyBinCount;
+        viewer.res = sample_rate / player.left_analyser_node.fftSize;
         
-        for(var i=0; i<player.left_analyser_node.frequencyBinCount; i++) {
+        var i_left = Math.round(viewer.f_low / viewer.res);
+        var i_right = Math.round(viewer.f_high / viewer.res);
+        
+        var delx = WIDTH / (i_right-i_left);
+        
+        for(var i=i_left; i<i_right; i++) {
             var v = (left_data[i]-viewer.db_min)*scale;
             var y = HEIGHT - v;
             if(i==0) {
@@ -103,7 +108,7 @@ function visualize() {
         canvasCtx.strokeStyle = 'rgb(255, 0, 0)';
         canvasCtx.beginPath();
         x=0;
-        for(var i=0; i<player.right_analyser_node.frequencyBinCount; i++) {
+        for(var i=i_left; i<i_right; i++) {
             var v = (right_data[i]-viewer.db_min)*scale;
             var y = HEIGHT - v;
             if(i==0) {
