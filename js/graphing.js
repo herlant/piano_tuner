@@ -8,6 +8,10 @@ var i_max;
 var viewer = 
 {   
     mic_analyser:[],
+    f_low:0,
+    f_high:0,
+    db_min:0,
+    db_max:0,
     init:function()
     {
         
@@ -34,6 +38,12 @@ var viewer =
         } else {
             console.log('getUserMedia not supported on your browser!');
         }
+        
+        this.db_min = document.getElementById("db_min").value;
+        this.db_max = document.getElementById("db_max").value;
+        this.f_low = document.getElementById("f_low").value;
+        this.f_high = document.getElementById("f_high").value;
+        this.fft_size = document.getElementById("fft_size").value;
     }
 }
 
@@ -64,53 +74,8 @@ function visualize() {
         player.left_analyser_node.getFloatFrequencyData(left_data);
         player.right_analyser_node.getFloatFrequencyData(right_data);
         
-        // get start and end indices based on frequency range
-        var min_freq = Math.min(player.left_f0, player.right_f0) - 100;
-        var max_freq = Math.max(player.left_f0, player.right_f0)*(player.n_harmonics+1) + 100;
-        
-        if(!player.right_en) {
-            min_freq = player.left_f0 - 100;
-            max_freq = player.left_f0*(player.n_harmonics+1) + 100;
-        }
-        if(!player.left_en) {
-            min_freq = player.right_f0 - 100;
-            max_freq = player.right_f0*(player.n_harmonics+1) + 100;
-        }
-        
-        i_min = Math.round(min_freq*player.left_analyser_node.fftSize / sample_rate);
-        i_max = Math.round(max_freq*player.left_analyser_node.fftSize / sample_rate);
-        
-        
-        // Get y min and max
-        var left_min = Math.min.apply(Math,left_data);
-        var left_max = Math.max.apply(Math,left_data);
-        var right_min = Math.min.apply(Math,right_data);
-        var right_max = Math.max.apply(Math,right_data);
-        
-        if(player.right_en && player.left_en) {
-            min = Math.min(left_min, right_min);
-            max = Math.max(left_max, right_max);
-        } else if(player.right_en && !player.left_en) {
-            min = right_min/2;
-            max = right_max;
-        } else if(!player.right_en && player.left_en) {
-            min = left_min/2;
-            max = left_max;
-        } else {
-            canvasCtx.fillStyle = 'rgb(0, 0, 0)';
-            canvasCtx.fillRect(0,0, WIDTH, HEIGHT);
-            return;
-        }
-        
-        min = -100;
-        
-        if(max != min) {
-            scale = HEIGHT/(max-min);
-        } else {
-            scale = 1;
-        }
-        
-        
+        // Get scale for the y-axis
+        scale = HEIGHT/(viewer.db_max-viewer.db_min);
 
         canvasCtx.fillStyle = 'rgb(0, 0, 0)';
         canvasCtx.fillRect(0,0, WIDTH, HEIGHT);
@@ -120,10 +85,10 @@ function visualize() {
         
         var x=0;
         var y=0;
-        var delx = WIDTH / (i_max-i_min);
+        var delx = WIDTH / player.left_analyser_node.frequencyBinCount;
         
-        for(var i=i_min; i<i_max; i++) {
-            var v = (left_data[i]-min)*scale;
+        for(var i=0; i<player.left_analyser_node.frequencyBinCount; i++) {
+            var v = (left_data[i]-viewer.db_min)*scale;
             var y = HEIGHT - v;
             if(i==0) {
                 canvasCtx.moveTo(x,y);
@@ -138,8 +103,8 @@ function visualize() {
         canvasCtx.strokeStyle = 'rgb(255, 0, 0)';
         canvasCtx.beginPath();
         x=0;
-        for(var i=i_min; i<i_max; i++) {
-            var v = (right_data[i]-min)*scale;
+        for(var i=0; i<player.right_analyser_node.frequencyBinCount; i++) {
+            var v = (right_data[i]-viewer.db_min)*scale;
             var y = HEIGHT - v;
             if(i==0) {
                 canvasCtx.moveTo(x,y);

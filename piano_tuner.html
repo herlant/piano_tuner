@@ -106,11 +106,11 @@ if (window.matchMedia && window.matchMedia('(max-device-width: 460px)').matches)
             <table>
             <tr>
                 <td>f_low</td>
-                <td><input type="number" id="f_low" value="0"></td>
+                <td><input type="number" id="f_low" value="0" onchange="set_f_low(this.value)"></td>
             </tr>
             <tr>
                 <td>f_high</td>
-                <td><input type="number" id="f_high" value="4400"></td>
+                <td><input type="number" id="f_high" value="4400" onchange="set_f_high(this.value)"></td>
             </tr>
             <tr>
                 <td>rate</td>
@@ -118,15 +118,25 @@ if (window.matchMedia && window.matchMedia('(max-device-width: 460px)').matches)
             </tr>
             <tr>
                 <td>length</td>
-                <td></td>
-            </tr>
-            <tr>
-                <td>max</td>
-                <td><input type="number" id="db_min" value="-100"></td>
+                <td>
+                <select name="fftSize" id="fft_size" onchange="set_fft_size(this.value)">
+                    <option value="32">32</option>
+                    <option value="64">64</option>
+                    <option value="128">128</option>
+                    <option value="256">256</option>
+                    <option value="512">512</option>
+                    <option value="1024">1024</option>
+                    <option value="2048" selected>2048</option>
+                </select>
+                </td>
             </tr>
             <tr>
                 <td>min</td>
-                <td><input type="number" id="db_max" value="300"></td>
+                <td><input type="number" id="db_min" max="-29" value="-100" onchange="set_db_min(this.value)"></td>
+            </tr>
+            <tr>
+                <td>max</td>
+                <td><input type="number" id="db_max" min=-99 value="300" onchange="set_db_max(this.value)"></td>
             </tr>
             </table>        
             </center>

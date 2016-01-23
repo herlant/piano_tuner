@@ -164,6 +164,42 @@ function toggle_stereo()
     }
 }
 
+
+// Display controls
+function set_f_low(v)
+{
+    viewer.f_low = v;
+}
+
+function set_f_high(v)
+{
+    viewer.f_high = v;
+}
+
+function set_db_min(v)
+{
+    viewer.db_min = v;
+    viewer.mic_analyser.minDecibels = v;
+    player.left_analyser_node.minDecibels = v;
+    player.right_analyser_node.minDecibels = v;
+    document.getElementById('db_max').min = v+1;
+}
+
+function set_db_max(v)
+{
+    viewer.db_max = v;
+    viewer.mic_analyser.maxDecibels = v;
+    player.left_analyser_node.maxDecibels = v;
+    player.right_analyser_node.maxDecibels = v;
+}
+
+function set_fft_size(v)
+{
+    viewer.mic_analyser.fftSize = v;
+    player.left_analyser_node.fftSize = v;
+    player.right_analyser_node.fftSize = v;
+}
+
 var noteNames = [ "", 
     "A0 Double Pedal A",
     "A♯0/B♭0",
