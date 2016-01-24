@@ -35,6 +35,10 @@ function init() {
     
     // display sampling rate 
     document.getElementById("sample_rate").value = window.context.sampleRate;
+    
+    // stop microphone
+    document.getElementById("mic_en").checked = false;
+    
 }
 
 function toggle_play()
@@ -203,6 +207,7 @@ function set_fft_size(v)
 function enable_mic(v)
 {
     viewer.mic_en=v;
+    set_fft_size(document.getElementById("fft_size").value);
 }
 
 var noteNames = [ "", 

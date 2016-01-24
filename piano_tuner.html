@@ -21,7 +21,7 @@ if (window.matchMedia && window.matchMedia('(max-device-width: 460px)').matches)
 <div class="wrapper">
     <canvas class="visualizer" id="fft_plot" width="640" height="300"></canvas>
     <form>
-        <input type="checkbox" name="viewer" value="microphone" onchange="enable_mic(this.checked)"> Microphone
+        <input type="checkbox" id="mic_en" value="microphone" onchange="enable_mic(this.checked)" checked="false"> Microphone
     </form>
 </div>
 
