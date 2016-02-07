@@ -29,7 +29,6 @@ var viewer =
                     viewer.source = window.context.createMediaStreamSource(stream);
                     viewer.mic_analyser = window.context.createAnalyser();
                     viewer.source.connect(viewer.mic_analyser);
-                    viewer.mic_analyser.connect(window.context.destination);
                 },
                 function(err)
                 {
