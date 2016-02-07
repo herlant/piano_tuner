@@ -66,19 +66,19 @@ function toggle_harmonics(channel, n)
         case "left":
             if(player.left_harmonics_en[n]) {
                 player.left_harmonics_en[n] = false;
-                button.style.background='lightgrey';
+                button.style.background='#BB6E34';
             } else {
                 player.left_harmonics_en[n] = true;
-                button.style.background='yellow';
+                button.style.background='#9b5622';
             }
             break;
         case "right":
             if(player.right_harmonics_en[n]) {
                 player.right_harmonics_en[n] = false;
-                button.style.background='lightgrey';
+                button.style.background='#BB6E34';
             } else {
                 player.right_harmonics_en[n] = true;
-                button.style.background='yellow';
+                button.style.background='#9b5622';
             }
             break;
     }
@@ -138,19 +138,19 @@ function toggle_channel(channel)
         case "left":
             if(player.left_en) {
                 player.left_en = false;
-                button.style.background='lightgrey';
+                button.style.background='#BB6E34';
             } else {
                 player.left_en = true;
-                button.style.background='yellow';
+                button.style.background='#9b5622';
             }
             break;
         case "right":
             if(player.right_en) {
                 player.right_en = false;
-                button.style.background='lightgrey';
+                button.style.background='#BB6E34';
             } else {
                 player.right_en = true;
-                button.style.background='yellow';
+                button.style.background='#9b5622';
             }
             break;
     }
@@ -162,9 +162,9 @@ function toggle_stereo()
     button = document.getElementById("mix");
     player.toggle_stereo();
     if(player.stereo) {
-        button.style.background='lightgrey';
+        button.style.background='#BB6E34';
     } else {
-        button.style.background='yellow';
+        button.style.background='#9b5622';
     }
 }
 
