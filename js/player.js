@@ -44,10 +44,7 @@ var player=
         if(this.playing) {
             // left channel
             if(this.left_en){
-                this.left_oscillators[0].frequency.value = this.left_f0; //set fundamental frequency
-                this.left_gain_nodes[0].gain.linearRampToValueAtTime(this.volume, t+this.fade_time); // start fundamental frequency playing
-                
-                for(var i=1; i<this.n_harmonics+1; i++) { // loop over harmonics
+                for(var i=0; i<this.n_harmonics; i++) { // loop over harmonics
                     this.left_oscillators[i].frequency.value = this.left_f0*(i+1)*Math.sqrt(1+this.left_inharmonicity*Math.pow(i+1,2));
                     if(this.left_harmonics_en[i]) { // if harmonics is enabled, start the oscillator
                         var new_gain = this.volume*Math.pow(this.left_damping,i);
@@ -64,10 +61,7 @@ var player=
             
             // right channel
             if(this.right_en){
-                this.right_oscillators[0].frequency.value = this.right_f0; //set fundamental frequency
-                this.right_gain_nodes[0].gain.linearRampToValueAtTime(this.volume, t+this.fade_time); // start fundamental frequency playing
-                
-                for(var i=1; i<this.n_harmonics+1; i++) { // loop over harmonics
+                for(var i=0; i<this.n_harmonics; i++) { // loop over harmonics
                     this.right_oscillators[i].frequency.value = this.right_f0*(i+1)*Math.sqrt(1+this.right_inharmonicity*Math.pow(i+1,2));
                     if(this.right_harmonics_en[i]) { // if harmonics is enabled, start the oscillator
                         var new_gain = this.volume*Math.pow(this.right_damping,i);
@@ -77,13 +71,13 @@ var player=
                     }
                 }
             } else {
-                for(var i=0; i<this.n_harmonics+1; i++) {
+                for(var i=0; i<this.n_harmonics; i++) {
                     this.right_gain_nodes[i].gain.linearRampToValueAtTime(0, t+this.fade_time);
                 }
             }
             
         } else { // Stop all oscillators
-            for(var i=0; i<this.n_harmonics+1; i++)
+            for(var i=0; i<this.n_harmonics; i++)
             {
                 //this.left_oscillators[i].stop();
                 this.left_gain_nodes[i].gain.linearRampToValueAtTime(0, t+this.fade_time);
@@ -110,7 +104,7 @@ var player=
         silence.connect(this.merger_node, 0, 0);
         silence.connect(this.merger_node, 0, 1);
         
-        for(var i=0; i<this.n_harmonics+1; i++){
+        for(var i=0; i<this.n_harmonics; i++){
             // Create oscillators
             this.left_oscillators.push(window.context.createOscillator());
             this.right_oscillators.push(window.context.createOscillator());
@@ -155,7 +149,7 @@ var player=
     
     start_oscillators:function()
     {
-        for(var i=0; i<this.n_harmonics+1; i++) {
+        for(var i=0; i<this.n_harmonics; i++) {
             // Start oscillators
             this.left_oscillators[i].start();
             this.right_oscillators[i].start();

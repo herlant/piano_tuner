@@ -61,6 +61,7 @@ function toggle_play()
 function toggle_harmonics(channel, n)
 {
     button = document.getElementById("button".concat(channel[0].toUpperCase()).concat(n.toString()))
+    n = n-1
     switch(channel)
     {
         case "left":
