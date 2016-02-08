@@ -54,7 +54,7 @@ var player=
                     }
                 }
             } else {
-                for(var i=0; i<this.n_harmonics+1; i++) {
+                for(var i=0; i<this.n_harmonics; i++) {
                     this.left_gain_nodes[i].gain.linearRampToValueAtTime(0, t+this.fade_time);
                 }
             }
