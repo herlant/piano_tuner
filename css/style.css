@@ -19,7 +19,7 @@ kbd { padding: 0px 4px; background-color: rgba(255,210,176,0.5);
 }
 span.button-name { font-size: 13px; text-transform: uppercase; letter-spacing: 0.5px; background-color: #BB6E34; color: #F5DBC6; padding: 1px 4px; border-radius: 3px; }
 
-span.toggle-off { display: inline-block; margin: 0 0px 9px 1px; background-color: #FFFFFF; color: #101010;
+span.toggle-off { display: inline-block; margin: 0 0px 0px 1px; background-color: #FFFFFF; color: #101010;
     text-transform: uppercase; font-size: 14px; letter-spacing: 1px;
 	-moz-user-select: none; -webkit-user-select: none; user-select: none;
 	border-radius: 2px; padding: 0.05em 0.3em; width: 0.75em; text-align: center; cursor: pointer;
@@ -27,7 +27,7 @@ span.toggle-off { display: inline-block; margin: 0 0px 9px 1px; background-color
     /*box-shadow: -1px 2px 1px 1px rgba(0,0,0,0.4);*/
 }
 
-span.toggle-on { display: inline-block; margin: 0 0px 9px 1px; background-color: #FF802B; color: #FFFFFF;
+span.toggle-on { display: inline-block; margin: 0 0px 0px 1px; background-color: #FF802B; color: #FFFFFF;
     text-transform: uppercase; font-size: 14px; letter-spacing: 1px;
 	-moz-user-select: none; -webkit-user-select: none; user-select: none;
 	border-radius: 2px; padding: 0.05em 0.3em; width: 0.75em; text-align: center; cursor: pointer;
@@ -37,6 +37,11 @@ span.toggle-on { display: inline-block; margin: 0 0px 9px 1px; background-color:
 
 input[type="number"] {
     width:80px;
+    text-align: right;
+}
+
+table {
+    text-align: center;
 }
 
 #slider, #slider .ui-slider-range { background: #FE9749;
