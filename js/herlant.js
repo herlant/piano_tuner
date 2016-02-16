@@ -39,16 +39,6 @@ function init() {
     // stop microphone
     document.getElementById("mic_en").checked = false;
     
-    // add options to the load_note list
-    var note_dropdown = document.getElementById("load_note");
-    for(var i=0; i<noteNames.length; i++)
-    {
-        var option = document.createElement("option");
-        option.text = noteNames[i];
-        option.id = i.toString();
-        note_dropdown.add(option);
-    }
-    
 }
 
 function toggle_play()

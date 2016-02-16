@@ -10,8 +10,6 @@ if (window.matchMedia && window.matchMedia('(max-device-width: 460px)').matches)
 }
 </script>
 <title>Online Tone Generator - generate pure tones of any frequency</title>
-<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,400italic,600' rel='stylesheet' type='text/css'>
-<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/themes/smoothness/jquery-ui.css">
 <link rel="stylesheet" href="./css/style.css">
 </head>
 <body>
@@ -23,6 +21,58 @@ if (window.matchMedia && window.matchMedia('(max-device-width: 460px)').matches)
     <canvas class="visualizer" id="fft_plot" width="640" height="300"></canvas>
     <input type="checkbox" id="mic_en" value="microphone" onchange="enable_mic(this.checked)" checked="false"> Microphone
 </div>
+
+
+<table>
+    <tr>
+        <td>
+            Ref
+            <select name="ref" id="ref">
+            <option value=440 selected>440</option>
+            </select>
+        </td>
+        <td>
+            Note
+            <select name="note" id="note">
+            <option value="C">C</option>
+            <option value="Db">D♭</option>
+            <option value="D">D</option>
+            <option value="Eb">E♭</option>
+            <option value="E">E</option>
+            <option value="F">F</option>
+            <option value="Gb">G♭</option>
+            <option value="G">G</option>
+            <option value="Ab">A♭</option>
+            <option value="A" selected>A</option>
+            <option value="Bb">B♭</option>
+            <option value="B">B</option>
+            </select>
+        </td>
+        <td>
+            Octave
+            <select name="octave" id="octave">
+            <option value="0">0</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4" selected>4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+            </select>
+        </td>
+        <td>
+            Into: 
+            <input type="button" id="load_left" value="L">
+            <input type="button" id="load_right" value="R">
+        </td>
+        <td>
+            R(L)
+        </td>
+    </tr>
+</table>
+<br>
 
 <table width="100%">
  <colgroup>
@@ -125,14 +175,11 @@ if (window.matchMedia && window.matchMedia('(max-device-width: 460px)').matches)
 </table>
 
 
-Load: <select id="load_note"></select><br><br>
 <input type="button" id="mix" value="Mix" onclick="toggle_stereo()"><br>
 </form>
 
 
 </div>
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.js"></script>
-<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/jquery-ui.js"></script>
 <script src="./js/player.js"></script>
 <script src="./js/graphing.js"></script>
 <script src="./js/herlant.js"></script>
