@@ -17,141 +17,115 @@ if (window.matchMedia && window.matchMedia('(max-device-width: 460px)').matches)
 <body>
 <div id=content>
 <center><h1>Piano Tuner</h1></center>
+<form>
 
 <div class="wrapper">
     <canvas class="visualizer" id="fft_plot" width="640" height="300"></canvas>
-    <form>
-        <input type="checkbox" id="mic_en" value="microphone" onchange="enable_mic(this.checked)" checked="false"> Microphone
-    </form>
+    <input type="checkbox" id="mic_en" value="microphone" onchange="enable_mic(this.checked)" checked="false"> Microphone
 </div>
 
-
 <table width="100%">
-    <tr>
-        <td>
-        <center>Left</center>
-        </td>
-        <td>
-        <center>Controls</center>
-        </td>
-        <td>
-        <center>Right</center>
-        </td>
-        <td>
-        <center>Display Controls</center>
-        </td>
-    </tr>
-    <tr>
-        <td>
-            <center>
-            <form>
-                Frequency <br>
-                <input type="number" name="frequency" id="left_f0" value="440" min="0" onchange="change_frequency('left',this.value)">
-                <br>Harmonics<br>
-                <span class=button id="buttonL1" value="1" onclick="toggle_harmonics('left', 1)">1</span>
-                <span class=button id="buttonL2" value="2" onclick="toggle_harmonics('left', 2)">2</span>
-                <span class=button id="buttonL3" value="3" onclick="toggle_harmonics('left', 3)">3</span>
-                <span class=button id="buttonL4" value="4" onclick="toggle_harmonics('left', 4)">4</span>
-                <span class=button id="buttonL5" value="5" onclick="toggle_harmonics('left', 5)">5</span>
-                <span class=button id="buttonL6" value="6" onclick="toggle_harmonics('left', 6)">6</span>
-                <span class=button id="buttonL7" value="7" onclick="toggle_harmonics('left', 7)">7</span>
-                <span class=button id="buttonL8" value="8" onclick="toggle_harmonics('left', 8)">8</span>
-                <span class=button id="buttonL9" value="9" onclick="toggle_harmonics('left', 9)">9</span>
-                <br>Damping<br>
-                <input type="number" id="left_damping" name="damping" value="1.0" step="0.1" max="1.0" min="0.0" onchange="change_damping('left',this.value)">
-                <br>Inharmonicity<br>
-                <input type="number" id="left_inharmonicity" name="inharmonicity" value="0.0000" step="0.0001" min="0.0000" onchange="change_inharmonicity('left',this.value)">
-                <br>
-            </form>
-            </center>
-        </td>
-        <td>
-            <center>
-            <form>
-                Load: <select id="load_note"></select><br><br>
-                <input type="button" id="play_button" value="Play" onclick="toggle_play()"><br>
-                <input type="button" value="Left" id="button_left" onclick="toggle_channel('left')">
-                <input type="button" value="Right" id="button_right" onclick="toggle_channel('right')"><br>
-                <input type="button" id="mix" value="Mix" onclick="toggle_stereo()"><br>
-                <br> Volume <br>
-                <input type="range" name="volume" id="volume" min="0" max="1" value="0.5" step="0.01" onchange="change_volume(this.value)">
-            </form>
-            </center>
-        </td>
-        <td>
-            <center>
-            <form>
-                Frequency <br>
-                <input type="number" name="frequency" id="right_f0" value="440" min="0" onchange="change_frequency('right',this.value)">
-                <br>Harmonics<br>
-                <span class=button id="buttonR1" value="1" onclick="toggle_harmonics('right', 1)">1</span>
-                <span class=button id="buttonR2" value="2" onclick="toggle_harmonics('right', 2)">2</span>
-                <span class=button id="buttonR3" value="3" onclick="toggle_harmonics('right', 3)">3</span>
-                <span class=button id="buttonR4" value="4" onclick="toggle_harmonics('right', 4)">4</span>
-                <span class=button id="buttonR5" value="5" onclick="toggle_harmonics('right', 5)">5</span>
-                <span class=button id="buttonR6" value="6" onclick="toggle_harmonics('right', 6)">6</span>
-                <span class=button id="buttonR7" value="7" onclick="toggle_harmonics('right', 7)">7</span>
-                <span class=button id="buttonR8" value="8" onclick="toggle_harmonics('right', 8)">8</span>
-                <span class=button id="buttonR9" value="9" onclick="toggle_harmonics('right', 9)">9</span>
-                <br>Damping<br>
-                <input type="number" id="right_damping" name="damping" value="1.0" step="0.1" max="1.0" min="0.0" onchange="change_damping('right',this.value)">
-                <br>Inharmonicity<br>
-                <input type="number" id="right_inharmonicity" name="inharmonicity" value="0.0000" step="0.0001" min="0.0000" onchange="change_inharmonicity('right',this.value)">
-                <br>
-            </form>
-            </center>
-        </td>
-        <td>
-        <form>
-            <center>
-            <table>
-            <tr>
-                <td>f_low</td>
-                <td><input type="number" id="f_low" value="0" onchange="set_f_low(this.value)"></td>
-            </tr>
-            <tr>
-                <td>f_high</td>
-                <td><input type="number" id="f_high" value="4400" onchange="set_f_high(this.value)"></td>
-            </tr>
-            <tr>
-                <td>rate</td>
-                <td><span title="Set by your soundcard, cannot change"><input type="text" id="sample_rate" value="" readonly></span></td>
-            </tr>
-            <tr>
-                <td>length</td>
-                <td>
-                <select name="fftSize" id="fft_size" onchange="set_fft_size(this.value)">
-                    <option value="32">32</option>
-                    <option value="64">64</option>
-                    <option value="128">128</option>
-                    <option value="256">256</option>
-                    <option value="512">512</option>
-                    <option value="1024">1024</option>
-                    <option value="2048">2048</option>
-                    <option value="4096">4096</option>
-                    <option value="8192">8192</option>
-                    <option value="16384">16384</option>
-                    <option value="32768" selected>32768</option>
-                </select>
-                </td>
-            </tr>
-            <tr>
-                <td>min</td>
-                <td><input type="number" id="db_min" max="-29" value="-100" onchange="set_db_min(this.value)"></td>
-            </tr>
-            <tr>
-                <td>max</td>
-                <td><input type="number" id="db_max" min=-99 value="300" onchange="set_db_max(this.value)"></td>
-            </tr>
-            </table>        
-            </center>
-            </form>
-        </td>
-    </tr>
+ <colgroup>
+    <col span="1" style="width: 10%;">
+    <col span="1" style="width: 15%;">
+    <col span="1" style="width: 30%;">
+    <col span="1" style="width: 20%;">
+    <col span="1" style="width: 25%;">
+ </colgroup>
+ <tr>
+    <td>Left</td>
+    <td>
+        <input type="number" name="frequency" id="left_f0" value="440" min="0" onchange="change_frequency('left',this.value)">
+    </td>
+    <td>
+        <span class=toggle-off id="buttonL1" value="1" onclick="toggle_harmonics('left', 1)">1</span>
+        <span class=toggle-off id="buttonL2" value="2" onclick="toggle_harmonics('left', 2)">2</span>
+        <span class=toggle-off id="buttonL3" value="3" onclick="toggle_harmonics('left', 3)">3</span>
+        <span class=toggle-off id="buttonL4" value="4" onclick="toggle_harmonics('left', 4)">4</span>
+        <span class=toggle-off id="buttonL5" value="5" onclick="toggle_harmonics('left', 5)">5</span>
+        <span class=toggle-off id="buttonL6" value="6" onclick="toggle_harmonics('left', 6)">6</span>
+        <span class=toggle-off id="buttonL7" value="7" onclick="toggle_harmonics('left', 7)">7</span>
+        <span class=toggle-off id="buttonL8" value="8" onclick="toggle_harmonics('left', 8)">8</span>
+        <span class=toggle-off id="buttonL9" value="9" onclick="toggle_harmonics('left', 9)">9</span>
+    </td>
+    <td>
+        <input type="number" id="left_damping" name="damping" value="1.0" step="0.1" max="1.0" min="0.0" onchange="change_damping('left',this.value)">
+    </td>
+    <td>
+        <input type="number" id="left_inharmonicity" name="inharmonicity" value="0.0000" step="0.0001" min="0.0000" onchange="change_inharmonicity('left',this.value)">
+    </td>
+ </tr>
+ <tr>
+    <td>Right</td>
+    <td>
+        <input type="number" name="frequency" id="right_f0" value="440" min="0" onchange="change_frequency('right',this.value)">
+    </td>
+    <td>
+        <span class=toggle-off id="buttonR1" value="1" onclick="toggle_harmonics('right', 1)">1</span>
+        <span class=toggle-off id="buttonR2" value="2" onclick="toggle_harmonics('right', 2)">2</span>
+        <span class=toggle-off id="buttonR3" value="3" onclick="toggle_harmonics('right', 3)">3</span>
+        <span class=toggle-off id="buttonR4" value="4" onclick="toggle_harmonics('right', 4)">4</span>
+        <span class=toggle-off id="buttonR5" value="5" onclick="toggle_harmonics('right', 5)">5</span>
+        <span class=toggle-off id="buttonR6" value="6" onclick="toggle_harmonics('right', 6)">6</span>
+        <span class=toggle-off id="buttonR7" value="7" onclick="toggle_harmonics('right', 7)">7</span>
+        <span class=toggle-off id="buttonR8" value="8" onclick="toggle_harmonics('right', 8)">8</span>
+        <span class=toggle-off id="buttonR9" value="9" onclick="toggle_harmonics('right', 9)">9</span>
+    </td>
+    <td>
+        <input type="number" id="right_damping" name="damping" value="1.0" step="0.1" max="1.0" min="0.0" onchange="change_damping('right',this.value)">
+    </td>
+    <td>
+        <input type="number" id="right_inharmonicity" name="inharmonicity" value="0.0000" step="0.0001" min="0.0000" onchange="change_inharmonicity('right',this.value)">
+    </td>
+ </tr>
+ <tr>
+    <td></td>
+    <td>Frequency</td>
+    <td>Harmonics</td>
+    <td>Damping</td>
+    <td>Inharmonicity</td>
+ </tr>
+</table>
+<br>
+<table>
+ <tr>
+    <td>Volume</td>
+    <td>f_low</td>
+    <td>f_high</td>
+    <td>rate</td>
+    <td>length</td>
+    <td>db_min</td>
+    <td>db_max</td>
+ </tr>
+ <tr>
+    <td><input type="range" name="volume" id="volume" min="0" max="1" value="0.5" step="0.01" onchange="change_volume(this.value)"></td>
+    <td><input type="number" id="f_low" value="0" onchange="set_f_low(this.value)"></td>
+    <td><input type="number" id="f_high" value="4400" onchange="set_f_high(this.value)"></td>
+    <td><span  style="display: block; width: 80px;" title="Set by your soundcard, cannot change"><input type="text" id="sample_rate" value="" readonly></span></td>
+    <td>
+        <select name="fftSize" id="fft_size" onchange="set_fft_size(this.value)">
+            <option value="32">32</option>
+            <option value="64">64</option>
+            <option value="128">128</option>
+            <option value="256">256</option>
+            <option value="512">512</option>
+            <option value="1024">1024</option>
+            <option value="2048">2048</option>
+            <option value="4096">4096</option>
+            <option value="8192">8192</option>
+            <option value="16384">16384</option>
+            <option value="32768" selected>32768</option>
+        </select>
+    </td>
+    <td><input type="number" id="db_min" max="-29" value="-100" onchange="set_db_min(this.value)"></td>
+    <td><input type="number" id="db_max" min=-99 value="300" onchange="set_db_max(this.value)"></td>
+ </tr>
 </table>
 
-<br>
 
+Load: <select id="load_note"></select><br><br>
+<input type="button" id="mix" value="Mix" onclick="toggle_stereo()"><br>
+</form>
 
 
 </div>

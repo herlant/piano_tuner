@@ -14,12 +14,12 @@ var player=
 {
     // These are variables within player that can be accessed
 
-    playing:false,          // A boolean which indicates whether the player is playing something on either channel
+    playing:true,          // A boolean which indicates whether the player is playing something on either channel
     volume:1,               // Overall volume of both channels, range 0-1
     n_harmonics:9,          // Number of harmonics - should match the number of harmonic buttons. Default is 9
     fade_time:0.1,
     
-    left_en:false,           // Enable playing on the left channel
+    left_en:true,           // Enable playing on the left channel
     left_oscillators:[], // Array containing the oscillators for the left channel (should be n_harmonics+1 oscillators per channel)
     left_gain_nodes:[],   // Array for gain nodes on the left channel, corresponds to the oscillators
     left_harmonics_en:[], // Boolean array of length n_harmonics showing which are enabled
@@ -27,7 +27,7 @@ var player=
     left_damping:1.0,            // Damping coefficient, range 0-1
     left_inharmonicity:0.0,
     
-    right_en:false,          // Enable playing on the right channel
+    right_en:true,          // Enable playing on the right channel
     right_oscillators:[], // Array containing the oscillators for the right channel (should be n_harmonics+1 oscillators per channel)
     right_gain_nodes:[],  // Array for gain nodes on the right channel, corresponds to the oscillators
     right_harmonics_en:[],// Boolean array of length n_harmonics showing which are enabled

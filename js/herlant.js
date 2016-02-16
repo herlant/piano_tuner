@@ -70,6 +70,12 @@ function toggle_play()
 
 function toggle_harmonics(channel, n)
 {
+    // Will only run once, unfortunately right now we check every time
+    if(!player.started) {
+        player.start_oscillators();
+        player.started = true;
+    }
+    
     button = document.getElementById("button".concat(channel[0].toUpperCase()).concat(n.toString()))
     n = n-1
     switch(channel)
@@ -77,19 +83,19 @@ function toggle_harmonics(channel, n)
         case "left":
             if(player.left_harmonics_en[n]) {
                 player.left_harmonics_en[n] = false;
-                button.style.background='#BB6E34';
+                button.className = 'toggle-off'
             } else {
                 player.left_harmonics_en[n] = true;
-                button.style.background='#9b5622';
+                button.className = 'toggle-on';
             }
             break;
         case "right":
             if(player.right_harmonics_en[n]) {
                 player.right_harmonics_en[n] = false;
-                button.style.background='#BB6E34';
+                button.className = 'toggle-off';
             } else {
                 player.right_harmonics_en[n] = true;
-                button.style.background='#9b5622';
+                button.className = 'toggle-on';
             }
             break;
     }
