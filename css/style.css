@@ -35,9 +35,25 @@ span.toggle-on { display: inline-block; margin: 0 0px 0px 1px; background-color:
     /*box-shadow: -1px 2px 1px 1px rgba(0,0,0,0.4);*/
 }
 
+.small-step-button {
+	width:15px;
+	text-align:center;
+	padding-left:0px;
+	padding-right:0px;
+}
+
+.big-step-button {
+	width:25px;
+	text-align:center;
+	padding-left:0px;
+	padding-right:0px;
+	
+}
+
 input[type="number"] {
-    width:80px;
-    text-align: right;
+    width:40px;
+    text-align: center;
+	-moz-appearance: textfield
 }
 
 table {
