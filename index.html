@@ -26,7 +26,7 @@ if (window.matchMedia && window.matchMedia('(max-device-width: 460px)').matches)
 <table>
     <tr>
         <td>
-            Ref
+            Ref(A4)
             <select name="ref" id="ref">
             <option value=440 selected>440</option>
             </select>
@@ -34,18 +34,18 @@ if (window.matchMedia && window.matchMedia('(max-device-width: 460px)').matches)
         <td>
             Note
             <select name="note" id="note">
-            <option value="C">C</option>
-            <option value="Db">D♭</option>
-            <option value="D">D</option>
-            <option value="Eb">E♭</option>
-            <option value="E">E</option>
-            <option value="F">F</option>
-            <option value="Gb">G♭</option>
-            <option value="G">G</option>
-            <option value="Ab">A♭</option>
-            <option value="A" selected>A</option>
-            <option value="Bb">B♭</option>
-            <option value="B">B</option>
+            <option value="0">C</option>
+            <option value="1">D♭</option>
+            <option value="2">D</option>
+            <option value="3">E♭</option>
+            <option value="4">E</option>
+            <option value="5">F</option>
+            <option value="6">G♭</option>
+            <option value="7">G</option>
+            <option value="8">A♭</option>
+            <option value="9" selected>A</option>
+            <option value="10">B♭</option>
+            <option value="11">B</option>
             </select>
         </td>
         <td>
@@ -64,8 +64,8 @@ if (window.matchMedia && window.matchMedia('(max-device-width: 460px)').matches)
         </td>
         <td>
             Into: 
-            <input type="button" id="load_left" value="L">
-            <input type="button" id="load_right" value="R">
+            <input type="button" id="load_left" value="L" onclick="load_note('left')">
+            <input type="button" id="load_right" value="R" onclick="load_note('right')">
         </td>
         <td>
             R(L)
@@ -85,7 +85,7 @@ if (window.matchMedia && window.matchMedia('(max-device-width: 460px)').matches)
  <tr>
     <td>Left</td>
     <td>
-        <input type="number" name="frequency" id="left_f0" value="440" min="0" onchange="change_frequency('left',this.value)">
+        <input type="number" name="frequency" id="left_f0" value="440" min="0" step="0.01" onchange="change_frequency('left',this.value)">
     </td>
     <td>
         <span class=toggle-off id="buttonL1" value="1" onclick="toggle_harmonics('left', 1)">1</span>
@@ -108,7 +108,7 @@ if (window.matchMedia && window.matchMedia('(max-device-width: 460px)').matches)
  <tr>
     <td>Right</td>
     <td>
-        <input type="number" name="frequency" id="right_f0" value="440" min="0" onchange="change_frequency('right',this.value)">
+        <input type="number" name="frequency" id="right_f0" value="440" min="0" step=0.01 onchange="change_frequency('right',this.value)">
     </td>
     <td>
         <span class=toggle-off id="buttonR1" value="1" onclick="toggle_harmonics('right', 1)">1</span>
