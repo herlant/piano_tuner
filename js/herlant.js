@@ -233,4 +233,5 @@ function increment(id, amount)
 {
 	var item = document.getElementById(id);
 	item.value = Number(item.value) + Number(amount);
+	item.onchange();
 }
