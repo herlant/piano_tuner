@@ -1,9 +1,5 @@
 html { min-height: 100%; }
 body {
-    /*background-image: linear-gradient(to bottom, #FC9B55, #FF9E59 42%, #ED9B5C 82%, #D18149);
-    background-image: -moz-linear-gradient(top , #FC9B55, #FF9E59 42%, #ED9B5C 82%, #D18149);
-	background-image: -webkit-linear-gradient(top , #FC9B55, #FF9E59 42%, #ED9B5C 82%, #D18149);
-    background-attachment: fixed;*/
     background-color: #EEEEEE;
 	font-family: 'Open Sans', sans-serif; font-size: 15px;
     margin: 50px auto; padding: 0px 30px;
@@ -12,11 +8,7 @@ p { line-height: 1.5 }
 a { color: inherit }
 h1 { color: black; font-weight: 400; margin: 1.5em 0; font-size: 32px; text-shadow: -1px 1px 3px #654; letter-spacing: -0.5px }
 h2 { font-weight: 600; font-size: 21px; color: black; }
-kbd { padding: 0px 4px; background-color: rgba(255,210,176,0.5);
-    background-color: rgba(228,186,155,0.5); background-color: rgba(255,255,255,0.11); color: #8E3B00; /*#FFD2B0*/ /*#E4BA9B */
-    white-space: nowrap; font-family: inherit; font-weight: normal; font-style: normal; font-size: 85%;
-    border: 1px solid #9B5622; border-bottom-width: 2px; border-radius: 3px;
-}
+
 span.button-name { font-size: 13px; text-transform: uppercase; letter-spacing: 0.5px; background-color: #BB6E34; color: #F5DBC6; padding: 1px 4px; border-radius: 3px; }
 
 span.toggle-off { display: inline-block; margin: 0 0px 0px 1px; background-color: #FFFFFF; color: #101010;
