@@ -66,22 +66,54 @@ function visualize() {
     function draw() {
         drawVisual = requestAnimationFrame(draw);
 
-        // Get scale for the y-axis
-        scale = HEIGHT/(viewer.db_max-viewer.db_min);
-
+        // Draw a black background
         canvasCtx.fillStyle = 'rgb(0, 0, 0)';
         canvasCtx.fillRect(0,0, WIDTH, HEIGHT);
+        
+        // Plot lines for harmonics that are playing
         canvasCtx.lineWidth = 2;
         canvasCtx.strokeStyle = 'rgb(0, 255, 0)';
         canvasCtx.beginPath();
+        for(var i=0; i<player.n_harmonics; i++){
+            if(player.right_harmonics_en[i]) {
+                freq = player.right_oscillators[i].frequency.value
+                if(freq>viewer.f_low && freq<viewer.f_high) {
+                    x = Math.round((freq - viewer.f_low)/(viewer.f_high - viewer.f_low)*WIDTH)
+                    canvasCtx.moveTo(x,0);
+                    canvasCtx.lineTo(x,HEIGHT)
+                }
+            }
+        }
+        canvasCtx.stroke();    
+        canvasCtx.lineWidth = 2;
+        canvasCtx.strokeStyle = 'rgb(255, 0, 0)';
+        canvasCtx.beginPath();
+        for(var i=0; i<player.n_harmonics; i++){
+            if(player.left_harmonics_en[i]) {
+                freq = player.left_oscillators[i].frequency.value
+                if(freq>viewer.f_low && freq<viewer.f_high) {
+                    x = Math.round((freq - viewer.f_low)/(viewer.f_high - viewer.f_low)*WIDTH)
+                    canvasCtx.moveTo(x,0);
+                    canvasCtx.lineTo(x,HEIGHT)
+                }
+            }
+        }
+        canvasCtx.stroke();  
         
-        var x=0;
-        var y=0;
-        viewer.res = sample_rate / viewer.mic_analyser.fftSize;
         
-        var i_left = Math.round(viewer.f_low / viewer.res);
-        var i_right = Math.round(viewer.f_high / viewer.res);
         
+        // res constains the resolution of the fft data
+        // since the fft is done over a certain bin size (fftSize)
+        // and with a certain sampling rate, each value that is returned
+        // will be an average over "res" number of Hz
+        var res = sample_rate / viewer.mic_analyser.fftSize;
+        
+        var i_left = Math.round(viewer.f_low / res);
+        var i_right = Math.round(viewer.f_high / res);
+        
+        // Get scale for the y-axis
+        scale = HEIGHT/(viewer.db_max-viewer.db_min);
+
         var delx = WIDTH / (i_right-i_left);
 
         // microphone
