@@ -65,7 +65,6 @@ var player=
     
     init:function()
     {
-        var f0 = 440;
         this.merger_node = window.context.createChannelMerger(2);
         this.left_analyser_node = window.context.createAnalyser();
         this.right_analyser_node = window.context.createAnalyser();
@@ -90,9 +89,6 @@ var player=
             // Connect gain nodes to oscillators
             this.left_oscillators[i].connect(this.left_gain_nodes[i]);
             this.right_oscillators[i].connect(this.right_gain_nodes[i]);
-            // Set initial frequency values
-            this.left_oscillators[i].frequency.value = f0*(i+1);
-            this.right_oscillators[i].frequency.value = f0*(i+1);
             
             // Connect Gain nodes to the audio output
             //this.left_gain_nodes[i].connect(window.context.destination);
@@ -105,7 +101,6 @@ var player=
             // Set gains to zero
             this.left_gain_nodes[i].gain = 0;
             this.right_gain_nodes[i].gain = 0;
-
         }
         
         // Connect analyser nodes to the merger node
