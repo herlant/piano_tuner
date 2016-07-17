@@ -41,22 +41,6 @@ function init() {
     
 }
 
-function toggle_play()
-{
-    if(!player.started) {
-        player.start_oscillators();
-        player.started = true;
-    }
-    button = document.getElementById("play_button");
-    if(player.playing) {
-        player.playing = false;
-        button.value = "Play"
-    } else {
-        player.playing = true;
-        button.value = "Stop"
-    }
-    player.update();
-}
 
 function toggle_harmonics(channel, n)
 {
@@ -137,33 +121,6 @@ function change_frequency(channel, val)
         break;
     }
     player.update();
-}
-
-function toggle_channel(channel)
-{
-    button = document.getElementById("button_".concat(channel))
-    switch(channel)
-    {
-        case "left":
-            if(player.left_en) {
-                player.left_en = false;
-                button.style.background='#BB6E34';
-            } else {
-                player.left_en = true;
-                button.style.background='#9b5622';
-            }
-            break;
-        case "right":
-            if(player.right_en) {
-                player.right_en = false;
-                button.style.background='#BB6E34';
-            } else {
-                player.right_en = true;
-                button.style.background='#9b5622';
-            }
-            break;
-    }
-    player.update();    
 }
 
 function toggle_stereo()

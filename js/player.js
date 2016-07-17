@@ -14,7 +14,6 @@ var player=
 {
     // These are variables within player that can be accessed
 
-    playing:true,          // A boolean which indicates whether the player is playing something on either channel
     volume:1,               // Overall volume of both channels, range 0-1
     n_harmonics:9,          // Number of harmonics - should match the number of harmonic buttons. Default is 9
     fade_time:0.1,
@@ -39,38 +38,29 @@ var player=
     update:function()
     {
         var t = window.context.currentTime;
-        if(this.playing) {
-            // left channel
-            for(var i=0; i<this.n_harmonics; i++) { // loop over harmonics
-                this.left_oscillators[i].frequency.value = this.left_f0*(i+1)*Math.sqrt(1+this.left_inharmonicity*Math.pow(i+1,2));
-                if(this.left_harmonics_en[i]) { // if this is harmonic is enabled, set the proper gain
-                    var new_gain = this.volume*Math.pow(this.left_damping,i);
-                    this.left_gain_nodes[i].gain.linearRampToValueAtTime(new_gain, t+this.fade_time); // set gain to the right level with fade
-                } else { //otherwise set the gain to zero
-                    this.left_gain_nodes[i].gain.linearRampToValueAtTime(0, t+this.fade_time);
-                }
-            }
 
-            // right channel
-            for(var i=0; i<this.n_harmonics; i++) { // loop over harmonics
-                this.right_oscillators[i].frequency.value = this.right_f0*(i+1)*Math.sqrt(1+this.right_inharmonicity*Math.pow(i+1,2));
-                if(this.right_harmonics_en[i]) { // if this is harmonic is enabled, set the proper gain
-                    var new_gain = this.volume*Math.pow(this.right_damping,i);
-                    this.right_gain_nodes[i].gain.linearRampToValueAtTime(new_gain, t+this.fade_time); // set gain to the right level with fade
-                } else { //otherwise set the gain to zero
-                    this.right_gain_nodes[i].gain.linearRampToValueAtTime(0, t+this.fade_time);
-                }
-            }
-            
-        } else { // Stop all oscillators
-            for(var i=0; i<this.n_harmonics; i++)
-            {
-                //this.left_oscillators[i].stop();
+        // left channel
+        for(var i=0; i<this.n_harmonics; i++) { // loop over harmonics
+            this.left_oscillators[i].frequency.value = this.left_f0*(i+1)*Math.sqrt(1+this.left_inharmonicity*Math.pow(i+1,2));
+            if(this.left_harmonics_en[i]) { // if this is harmonic is enabled, set the proper gain
+                var new_gain = this.volume*Math.pow(this.left_damping,i);
+                this.left_gain_nodes[i].gain.linearRampToValueAtTime(new_gain, t+this.fade_time); // set gain to the right level with fade
+            } else { //otherwise set the gain to zero
                 this.left_gain_nodes[i].gain.linearRampToValueAtTime(0, t+this.fade_time);
-                //this.right_oscillators[i].stop();
+            }
+        }
+
+        // right channel
+        for(var i=0; i<this.n_harmonics; i++) { // loop over harmonics
+            this.right_oscillators[i].frequency.value = this.right_f0*(i+1)*Math.sqrt(1+this.right_inharmonicity*Math.pow(i+1,2));
+            if(this.right_harmonics_en[i]) { // if this is harmonic is enabled, set the proper gain
+                var new_gain = this.volume*Math.pow(this.right_damping,i);
+                this.right_gain_nodes[i].gain.linearRampToValueAtTime(new_gain, t+this.fade_time); // set gain to the right level with fade
+            } else { //otherwise set the gain to zero
                 this.right_gain_nodes[i].gain.linearRampToValueAtTime(0, t+this.fade_time);
             }
         }
+
     },
     
     init:function()
