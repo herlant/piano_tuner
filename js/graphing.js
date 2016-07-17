@@ -58,11 +58,6 @@ function visualize() {
     var WIDTH = canvas.width;
     var HEIGHT = canvas.height;
 
-    var left_buffer_length = player.left_analyser_node.frequencyBinCount;
-    var left_data = new Float32Array(left_buffer_length);
-    var right_buffer_length = player.right_analyser_node.frequencyBinCount;
-    var right_data = new Float32Array(right_buffer_length);
-    
     
     canvasCtx.clearRect(0,0, WIDTH, HEIGHT);
 
@@ -70,13 +65,7 @@ function visualize() {
     
     function draw() {
         drawVisual = requestAnimationFrame(draw);
-        
-        // Get Data
-        player.left_analyser_node.getFloatFrequencyData(left_data);
-        player.right_analyser_node.getFloatFrequencyData(right_data);
-        
-        
-        
+
         // Get scale for the y-axis
         scale = HEIGHT/(viewer.db_max-viewer.db_min);
 
@@ -88,42 +77,13 @@ function visualize() {
         
         var x=0;
         var y=0;
-        viewer.res = sample_rate / player.left_analyser_node.fftSize;
+        viewer.res = sample_rate / viewer.mic_analyser.fftSize;
         
         var i_left = Math.round(viewer.f_low / viewer.res);
         var i_right = Math.round(viewer.f_high / viewer.res);
         
         var delx = WIDTH / (i_right-i_left);
-        
-        for(var i=i_left; i<i_right; i++) {
-            var v = (left_data[i]-viewer.db_min)*scale;
-            var y = HEIGHT - v;
-            if(i==0) {
-                canvasCtx.moveTo(x,y);
-            } else {
-                canvasCtx.lineTo(x,y);
-            }
-            x += delx;
-        }
-        canvasCtx.stroke();
-        
-        // right channel
-        canvasCtx.lineWidth = 2;
-        canvasCtx.strokeStyle = 'rgb(255, 0, 0)';
-        canvasCtx.beginPath();
-        x=0;
-        for(var i=i_left; i<i_right; i++) {
-            var v = (right_data[i]-viewer.db_min)*scale;
-            var y = HEIGHT - v;
-            if(i==0) {
-                canvasCtx.moveTo(x,y);
-            } else {
-                canvasCtx.lineTo(x,y);
-            }
-            x += delx;
-        }
-        canvasCtx.stroke();
-        
+
         // microphone
         if(viewer.mic_en)
         {

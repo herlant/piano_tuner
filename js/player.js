@@ -65,9 +65,8 @@ var player=
     
     init:function()
     {
-        this.merger_node = window.context.createChannelMerger(2);
-        this.left_analyser_node = window.context.createAnalyser();
-        this.right_analyser_node = window.context.createAnalyser();
+        // I think the merger node is needed to do the mixing, so I will leave it here
+        //this.merger_node = window.context.createChannelMerger(2);
         
         // intially disable all harmonics
         for(var i=0; i<this.n_harmonics; i++){
@@ -75,9 +74,9 @@ var player=
             this.right_harmonics_en.push(false);
         }
         
-        silence = window.context.createBufferSource();
-        silence.connect(this.merger_node, 0, 0);
-        silence.connect(this.merger_node, 0, 1);
+        //silence = window.context.createBufferSource();
+        //silence.connect(this.merger_node, 0, 0);
+        //silence.connect(this.merger_node, 0, 1);
         
         for(var i=0; i<this.n_harmonics; i++){
             // Create oscillators
@@ -91,30 +90,18 @@ var player=
             this.right_oscillators[i].connect(this.right_gain_nodes[i]);
             
             // Connect Gain nodes to the audio output
-            //this.left_gain_nodes[i].connect(window.context.destination);
-            //this.right_gain_nodes[i].connect(window.context.destination);
-            
-            // Connect the gain nodes to the analyser node
-            this.left_gain_nodes[i].connect(this.left_analyser_node);
-            this.right_gain_nodes[i].connect(this.right_analyser_node);
+            this.left_gain_nodes[i].connect(window.context.destination);
+            this.right_gain_nodes[i].connect(window.context.destination);
             
             // Set gains to zero
             this.left_gain_nodes[i].gain = 0;
             this.right_gain_nodes[i].gain = 0;
         }
         
-        // Connect analyser nodes to the merger node
-        this.left_analyser_node.connect(this.merger_node, 0, 0);
-        this.right_analyser_node.connect(this.merger_node, 0, 1);
         
         // Connect the merger node to the destination
-        this.merger_node.connect(window.context.destination);
-        
-        // Set analyser node parameters
-        this.left_analyser_node.minDecibels = -100;
-        this.left_analyser_node.maxDecibels = 100;
-        
-        
+        //this.merger_node.connect(window.context.destination);
+
         this.update();
     },
     
@@ -130,18 +117,18 @@ var player=
     toggle_stereo:function()
     {
         if(this.stereo){
-            this.merger_node.disconnect();
-            this.left_analyser_node.connect(window.context.destination);
-            this.right_analyser_node.connect(window.context.destination);
+            //this.merger_node.disconnect();
+            //this.left_analyser_node.connect(window.context.destination);
+            //this.right_analyser_node.connect(window.context.destination);
             this.stereo = false;
         } else {
-            this.merger_node = window.context.createChannelMerger(2);
-            silence = window.context.createBufferSource();
-            silence.connect(this.merger_node, 0, 0);
-            silence.connect(this.merger_node, 0, 1)
-            this.merger_node.connect(window.context.destination);
-            this.left_analyser_node.connect(this.merger_node, 0, 0);
-            this.right_analyser_node.connect(this.merger_node, 0, 1);
+            //this.merger_node = window.context.createChannelMerger(2);
+            //silence = window.context.createBufferSource();
+            //silence.connect(this.merger_node, 0, 0);
+            //silence.connect(this.merger_node, 0, 1)
+            //this.merger_node.connect(window.context.destination);
+            //this.left_analyser_node.connect(this.merger_node, 0, 0);
+            //this.right_analyser_node.connect(this.merger_node, 0, 1);
             this.stereo = true;
         }            
     }   
